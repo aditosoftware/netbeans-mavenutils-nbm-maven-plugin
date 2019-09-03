@@ -1,2 +1,6 @@
 /target/
 /nb-configuration.xml
+
+# IntelliJ
+.idea
+*.iml
