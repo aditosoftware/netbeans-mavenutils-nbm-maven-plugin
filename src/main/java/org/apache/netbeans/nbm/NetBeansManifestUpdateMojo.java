@@ -503,6 +503,13 @@ public class NetBeansManifestUpdateMojo
                 String depToken = dep.getExplicitValue();
                 if ( depToken == null )
                 {
+                    String moduleWithRelease = depExaminator.getModuleWithRelease();
+                    if (moduleWithRelease == null || moduleWithRelease.isEmpty())
+                    {
+                        getLog().error("Cannot properly resolve the NetBeans dependency for " + dep.getId() );
+                        continue;
+                    }
+
                     if ( "loose".equals( type ) )
                     {
                         depToken = depExaminator.getModuleWithRelease();
