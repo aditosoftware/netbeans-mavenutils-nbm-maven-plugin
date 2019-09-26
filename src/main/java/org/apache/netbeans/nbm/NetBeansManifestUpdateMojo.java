@@ -437,9 +437,16 @@ public class NetBeansManifestUpdateMojo
         }
         conditionallyAddAttribute( mainSection, "OpenIDE-Module-Public-Packages", packagesValue );
 
-        //See http://www.netbeans.org/download/dev/javadoc/org-openide-modules/apichanges.html#split-of-openide-jar
-        conditionallyAddAttribute( mainSection, "OpenIDE-Module-Requires",
-            "org.openide.modules.ModuleFormat1" );
+        // ADITO
+        Manifest.Attribute attr = mainSection.getAttribute( "OpenIDE-Module-Requires" );
+        if (attr != null && attr.getValue() != null && attr.getValue().trim().equals("-")){
+            mainSection.removeAttribute( "OpenIDE-Module-Requires" );
+        }
+        else
+            //See http://www.netbeans.org/download/dev/javadoc/org-openide-modules/apichanges.html#split-of-openide-jar
+            conditionallyAddAttribute( mainSection, "OpenIDE-Module-Requires",
+                "org.openide.modules.ModuleFormat1" );
+
 //        conditionallyAddAttribute(mainSection, "OpenIDE-Module-IDE-Dependencies", "IDE/1 > 3.40");
         // localization items
         if ( !examinator.isLocalized() )
